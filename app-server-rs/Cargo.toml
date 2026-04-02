@@ -1,0 +1,27 @@
+[package]
+name = "scanservjs-epsonv600"
+version = "3.0.3"
+edition = "2024"
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+tower-http = { version = "0.6", features = ["fs", "trace", "cors"] }
+utoipa = { version = "5", features = ["axum_extras"] }
+utoipa-swagger-ui = { version = "9", features = ["axum"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4", features = ["derive"] }
+mime_guess = "2"
+base64 = "0.22"
+thiserror = "2"
+tokio-util = { version = "0.7", features = ["io"] }
+
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1

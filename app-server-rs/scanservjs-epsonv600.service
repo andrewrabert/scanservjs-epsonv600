@@ -1,0 +1,14 @@
+[Unit]
+Description=scanservjs-epsonv600
+After=network.target
+
+[Service]
+ExecStartPre=/bin/mkdir -p /data/scans /data/thumbnails /data/preview /data/temp_disk
+ExecStartPre=/bin/rm -rf /tmp/scanservjs-epsonv600
+ExecStartPre=/bin/mkdir -p /tmp/scanservjs-epsonv600/preview /tmp/scanservjs-epsonv600/temp_ram
+ExecStart=/usr/bin/scanservjs-epsonv600 --config /etc/scanservjs/config.toml
+Restart=always
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+[server]
+host = "::"
+port = 8080
+timeout_secs = 600
+
+[paths]
+output_dir = "/data/scans"
+thumbnail_dir = "/data/thumbnails"
+preview_dir = "/data/preview"
+client_dir = "./client"
+
+[scanner]
+command = "/usr/bin/scanservjs-epsonv600-scanimage"
+preview_resolution = 200
+
+[log]
+level = "info"
