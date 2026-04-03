@@ -1,4 +1,4 @@
-$font: 'Segoe UI', 'Roboto', 'Lucida Grande', 'San Francisco', 'Lucidabright', 'Helvetica';
+$font: 'Segoe UI', 'Roboto', 'Lucida Grande', 'San Francisco', 'Lucidabright', 'Helvetica', sans-serif;
 
 @use 'vuetify/settings' with (
   $body-font-family: $font,

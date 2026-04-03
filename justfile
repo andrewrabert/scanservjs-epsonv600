@@ -1,3 +1,7 @@
+# Install frontend dependencies
+setup-ui:
+    cd app-ui && npm install
+
 # Build the Vue frontend
 build-ui:
     cd app-ui && npm run build
