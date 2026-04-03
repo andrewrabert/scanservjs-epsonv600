@@ -1,41 +1,26 @@
 <template>
   <div>
-    <v-app-bar class="elevation-0" :color="appColor" app>
-      <v-toolbar-title class="unselectable">{{ $t('global.application-name') }}</v-toolbar-title>
+    <v-app-bar class="elevation-0" app>
+      <v-toolbar-title class="unselectable">Epson Perfection V600 Photo</v-toolbar-title>
       <v-tabs>
-        <v-tab elevation="0" @click="go('/scan')"><v-icon class="mr-2" :icon="mdiCamera" />{{ $t('navigation.scan') }}</v-tab>
-        <v-tab elevation="0" @click="go('/files')"><v-icon class="mr-2" :icon="mdiFileDocumentMultiple" />{{ $t('navigation.files') }}</v-tab>
-        <v-tab elevation="0" @click="go('/settings')"><v-icon class="mr-2" :icon="mdiCog" />{{ $t('navigation.settings') }}</v-tab>
+        <v-tab elevation="0" @click="go('/scan')"><v-icon class="mr-2" :icon="mdiCamera" />Scan</v-tab>
+        <v-tab elevation="0" @click="go('/files')"><v-icon class="mr-2" :icon="mdiFileDocumentMultiple" />Files</v-tab>
+        <v-tab elevation="0" @click="go('/settings')"><v-icon class="mr-2" :icon="mdiCog" />Settings</v-tab>
       </v-tabs>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import Constants from '../classes/constants';
 import { mdiCamera, mdiCog, mdiFileDocumentMultiple } from '@mdi/js';
 export default {
   name: 'Navigation',
-
-  props: {
-    appColor: {
-      type: String,
-      default: 'accent-4'
-    }
-  },
 
   setup() {
     return {
       mdiCamera,
       mdiCog,
       mdiFileDocumentMultiple
-    };
-  },
-
-  data() {
-    return {
-      drawer: false,
-      version: Constants.Version
     };
   },
 

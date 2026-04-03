@@ -11,7 +11,7 @@
       <v-toolbar flat>
         <v-spacer />
         <v-btn v-if="!smAndDown" :disabled="selectedFiles.length === 0" color="warning" @click="multipleDelete">
-          {{ $t('files.button:delete-selected') }}
+          Delete Selected
         </v-btn>
         <v-menu v-if="actions.length > 0" bottom :offset-y="true">
           <template #activator="{ props }">
@@ -20,29 +20,29 @@
                 color="primary"
                 v-bind="props">
               <v-icon v-if="smAndDown" :icon="mdiDotsVertical" />
-              <span v-if="!smAndDown">{{ $t('files.button:action-selected') }}</span>
+              <span v-if="!smAndDown">Run action...</span>
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-if="smAndDown" :title="$t('files.button:delete-selected')" @click="multipleDelete" />
+            <v-list-item v-if="smAndDown" title="Delete Selected" @click="multipleDelete" />
             <v-list-item v-for="(action, index) in actions" :key="index" :title="action" @click="multipleAction(action)" />
           </v-list>
         </v-menu>
         <v-dialog v-model="dialogEdit" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">{{ $t('files.dialog:rename') }}</v-card-title>
+            <v-card-title class="text-h5">Change file name</v-card-title>
             <v-card-text>
               <v-container>
-                <v-text-field v-model="editedItem.newName" :label="$t('files.filename')" />
+                <v-text-field v-model="editedItem.newName" label="Filename" />
               </v-container>
             </v-card-text>
             <v-card-actions>
               <v-spacer />
               <v-btn small @click="closeRename">
-                {{ $t('files.dialog:rename-cancel') }}
+                Cancel
               </v-btn>
               <v-btn small color="primary" @click="renameFileConfirm">
-                {{ $t('files.dialog:rename-save') }}
+                Save
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -57,7 +57,7 @@
         :contain="true" />
     </template>
     <template #[`item.lastModified`]="{ item }">
-      {{ $d(new Date(item.lastModified), 'long') }}
+      {{ new Date(item.lastModified).toLocaleString() }}
     </template>
     <template #[`item.actions`]="{ item }">
       <v-icon class="mr-2" :icon="mdiDownload" @click="open(item)" />
@@ -92,7 +92,7 @@ export default {
       smAndDown
     };
   },
-  
+
   data() {
     return {
       dialogDelete: false,
@@ -124,25 +124,25 @@ export default {
           key: 'thumb',
         },
         {
-          title: this.$t('files.filename'),
+          title: 'Filename',
           align: 'start',
           sortable: true,
           key: 'name',
         },
         {
-          title: this.$t('files.date'),
+          title: 'Date',
           align: 'start',
           sortable: true,
           key: 'lastModified',
         },
         {
-          title: this.$t('files.size'),
+          title: 'Size',
           align: 'start',
           sortable: true,
           key: 'sizeString',
         },
         {
-          title: this.$t('files.actions'),
+          title: 'Actions',
           value: 'actions',
           sortable: false,
           key: 'actions',
@@ -177,7 +177,6 @@ export default {
 
   methods: {
     actionList() {
-      // TODO remove
       this.actions = [];
     },
 
@@ -197,7 +196,7 @@ export default {
       Common.fetch(`api/v1/files/${file.name}`, {
         method: 'DELETE'
       }).then(data => {
-        this.$emit('notify', {type: 'i', message: `${this.$t('files.message:deleted', [data.name])}`});
+        this.$emit('notify', {type: 'i', message: `Deleted ${data.name}`});
         this.fileList();
         this.$emit('mask', -1);
       }).catch(error => {
@@ -223,7 +222,7 @@ export default {
         },
         body: JSON.stringify({newName: this.editedItem.newName})
       }).then(() => {
-        this.$emit('notify', {type: 'i', message: `${this.$t('files.message:renamed')}`});
+        this.$emit('notify', {type: 'i', message: 'File renamed'});
         this.fileList();
         this.$emit('mask', -1);
       }).catch(error => {
@@ -249,7 +248,7 @@ export default {
         const name = this.selectedFiles[0].name;
         try {
           await Common.fetch(`api/v1/files/${name}`, {method: 'DELETE'});
-          this.$emit('notify', {type: 'i', message: `${this.$t('files.message:deleted', [name])}`});
+          this.$emit('notify', {type: 'i', message: `Deleted ${name}`});
         } catch (error) {
           this.$emit('notify', {type: 'e', message: error});
         }
@@ -268,7 +267,7 @@ export default {
         const filename = this.selectedFiles[0].name;
         try {
           await Common.fetch(`api/v1/files/${filename}/actions/${actionName}`, {method: 'POST'});
-          this.$emit('notify', {type: 'i', message: `${this.$t('files.message:action', [actionName, filename])}`});
+          this.$emit('notify', {type: 'i', message: `Ran ${actionName} on ${filename}`});
         } catch (error) {
           this.$emit('notify', {type: 'e', message: error});
         }

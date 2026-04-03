@@ -1,11 +1,9 @@
 import { defineConfig } from "vite";
-import vue from '@vitejs/plugin-vue'
-import vuetify from 'vite-plugin-vuetify'
-import path from "path";
-import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
-import packageJson from './package.json'
+import vue from '@vitejs/plugin-vue';
+import vuetify from 'vite-plugin-vuetify';
+import { fileURLToPath } from 'url';
+import packageJson from './package.json';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   base: '',
   server: {
@@ -17,14 +15,10 @@ export default defineConfig({
   plugins: [
     vue(),
     vuetify(),
-    VueI18nPlugin({
-      include: [path.resolve(__dirname, './src/locales/**')],
-      compositionOnly: false
-    }),
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   css: {

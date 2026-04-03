@@ -1,36 +1,25 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { createI18n, useI18n } from 'vue-i18n';
 import { createVuetify } from 'vuetify';
-import { createVueI18nAdapter } from 'vuetify/locale/adapters/vue-i18n';
-import messages from '@intlify/unplugin-vue-i18n/messages';
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
 import '@/styles/main.scss';
 import { VueToastr } from 'vue-toastr';
 import 'vue-toastr/dist/style.css';
 
-import Constants from './classes/constants';
 import App from './App.vue';
 import Files from './components/Files.vue';
 import Scan from './components/Scan.vue';
 import Settings from './components/Settings.vue';
 
-const datetimeFormats = {};
-for (const locale of Constants.Locales) {
-  datetimeFormats[locale] = Constants.DateTimeFormat;
-}
-
-const i18n = createI18n({
-  legacy: false,
-  datetimeFormats,
-  locale: import.meta.env.VITE_APP_I18N_LOCALE,
-  fallbackLocale: import.meta.env.VITE_APP_I18N_FALLBACK_LOCALE,
-  messages: messages,
-  missingWarn: false,
-  fallbackWarn: false
-});
-
 const vuetify = createVuetify({
+  display: {
+    thresholds: {
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+      xxl: 2560,
+    },
+  },
   defaults: {
     VBtn: {
       variant: 'tonal',
@@ -48,9 +37,6 @@ const vuetify = createVuetify({
     sets: {
       mdi,
     }
-  },
-  locale: {
-    adapter: createVueI18nAdapter({ i18n, useI18n })
   },
   theme: {
     themes: {
@@ -83,6 +69,5 @@ const router = createRouter({
 createApp(App)
   .use(vuetify)
   .use(router)
-  .use(i18n)
   .use(VueToastr)
   .mount('#app');

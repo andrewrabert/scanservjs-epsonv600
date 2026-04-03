@@ -8,7 +8,7 @@
       </div>
     </transition>
 
-    <navigation :app-color="appColor" />
+    <navigation />
 
     <v-main>
       <v-container fluid>
@@ -50,7 +50,6 @@ export default {
     vuetifyTheme.global.name.value = theme;
     const manifest = ManifestBuilder.create()
       .withDark(theme === Constants.Themes.Dark)
-      .withStorage(storage)
       .build();
 
     const element = document.createElement('link');
@@ -62,25 +61,10 @@ export default {
   data() {
     return {
       maskRef: 0,
-      appColor: storage.settings.appColor
     };
   },
 
-  beforeMount() {
-    const locale = new URLSearchParams(window.location.search).get('locale')
-      || storage.settings.locale
-      || navigator.languages[0]
-      || 'en';
-    const settings = storage.settings;
-    settings.locale = locale;
-    storage.settings = settings;
-  },
-
   mounted() {
-    this.$vuetify.rtl = Constants.RtlLocales.includes(storage.settings.locale);    
-    this.$i18n.locale = storage.settings.locale;
-
-    // Default route if connected
     if (this.$route.matched.length === 0) {
       this.$router.replace('/scan');
     }
@@ -114,10 +98,10 @@ export default {
 
 <style>
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 input[type=number] {
